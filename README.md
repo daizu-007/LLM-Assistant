@@ -5,6 +5,8 @@ Gemini-proベースのAIアシスタントです。遊びで作っているた�
 # 使い方
 
 環境変数に`GOOGLE_AI_API_KEY`というキーでGoogle AI studioのAPIキーを入力してください。Googleアカウントがあれば支払い方法を設定することなく無料で利用できます。使用時はVoicevoxを起動しておく必要があります。
+現状Windowsでのみ動作します。
+Python3.12
 
 # 話者ID一覧
 
