@@ -1,0 +1,7 @@
+# アシスタントの設定ファイル
+[general]
+# アシスタントの名前
+name = "アレックス"
+# Voicevoxの話者ID
+# 話者IDはREADME.mdを参照してください
+speaker = 23
