@@ -101,8 +101,8 @@ Coreバージョン0.15.2時点の情報です。
 # Credit
 
 以下のサイトを参考にしました。  
-https://note.com/key410/n/n1bf0e797da61
-https://qiita.com/Nekonun/items/c9a97a028441fdb0b891
-https://zenn.dev/nekoallergy/articles/py-advance-threading-01
-https://qiita.com/heimaru1231/items/b6ed09d4787e4e28175a
-https://qiita.com/wwwcojp/items/3535985007aa4269009c
+https://note.com/key410/n/n1bf0e797da61  
+https://qiita.com/Nekonun/items/c9a97a028441fdb0b891  
+https://zenn.dev/nekoallergy/articles/py-advance-threading-01  
+https://qiita.com/heimaru1231/items/b6ed09d4787e4e28175a  
+https://qiita.com/wwwcojp/items/3535985007aa4269009c  
