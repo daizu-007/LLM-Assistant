@@ -139,16 +139,12 @@ def worker():
 
 # テキストを音声合成して再生する関数
 def tts_and_play(text_list):
-
     for text in text_list:
         text_queue.put(text)
-
     # ストップシグナルを送る
     text_queue.put(None)
-
     thread = threading.Thread(target=worker, daemon=True)
     thread.start()
-
     # キューが空になるまで待機しながら、音声を再生
     while not text_queue.empty():
         try:
