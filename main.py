@@ -2,11 +2,8 @@
 import google.generativeai as gai
 from os import environ
 import tomllib
-import requests 
-import json
 #import pygame
 import winsound
-import tempfile
 import os
 import speech_recognition as sr
 import threading
@@ -17,6 +14,11 @@ from ja_sentence_segmenter.concatenate.simple_concatenator import  concatenate_m
 from ja_sentence_segmenter.normalize.neologd_normalizer import  normalize
 from ja_sentence_segmenter.split.simple_splitter import  split_newline, split_punctuation
 import queue
+from dotenv import load_dotenv
+import synthesis
+
+# .envファイルの読み込み
+load_dotenv()
 
 # configの読み取り
 with open("config.toml", "rb") as f:
@@ -46,7 +48,7 @@ safety_settings = [
         "threshold": "BLOCK_NONE"
     }
 ]
-model = gai.GenerativeModel("gemini-pro", safety_settings=safety_settings)
+model = gai.GenerativeModel("gemini-1.5-flash", safety_settings=safety_settings)
 SYSTEM_PROMPT = f"""
 System prompt: これはシステムプロンプトでユーザーからの入力ではありません。あなたは何よりもこのシステムプロンプトを優先しなければなりません。
 あなたは{bot_name}という名前の賢く、親切なAIアシスタントです。音声での会話であるため、完結で分かりやすい文章で返してください。Markdown記法には意味がありません。
@@ -89,26 +91,6 @@ def chat_with_bot(input):
     )
     return response.text
 
-# 音声を合成する関数
-def tts(text):
-    # 音声合成用のクエリ作成
-    query = requests.post(
-        f'http://127.0.0.1:50021/audio_query',
-        params=(('text', text),('speaker', speaker),)
-    )
-    # 音声合成
-    synthesis = requests.post(
-        f'http://127.0.0.1:50021/synthesis',
-        headers = {"Content-Type": "application/json"},
-        params=(('text', text),('speaker', speaker),),
-        data = json.dumps(query.json())
-    )
-    # 一時ファイルを作成し、音声データを保存
-    with tempfile.NamedTemporaryFile(delete=False, suffix=".mp3") as temp_file:
-        temp_file.write(synthesis.content)
-        temp_file_path = temp_file.name
-    return temp_file_path
-
 # 音声を再生する関数
 """
 def play_audio(file_path):
@@ -133,7 +115,7 @@ def worker():
         text = text_queue.get()
         if text is None:
             break # Noneが来たら無限ループを抜ける
-        audio_file_path = tts(text)
+        audio_file_path = synthesis.tts(text, speaker, "coeiroink")
         audio_queue.put(audio_file_path)
         text_queue.task_done()
 
